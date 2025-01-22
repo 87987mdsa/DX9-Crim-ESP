@@ -1,32 +1,30 @@
+
 local Lib = loadstring(dx9.Get("https://raw.githubusercontent.com/soupg/DXLibUI/main/main.lua"))()
 local Window = Lib:CreateWindow({Title = "Criminalty | icehook.dx9", Size = {0,0}, Resizable = true, ToggleKey = "[V]", FooterMouseCoords = false })
 local Tab1 = Window:AddTab("ESP")
 local Groupbox1 = Tab1:AddMiddleGroupbox("ESP TOGGLES") 
-local lootESP = Groupbox1:AddToggle({Default = false, Text = "Loot ESP"}):OnChanged(function(value)
+local lootESP = Groupbox1:AddToggle({Default = true, Text = "Loot ESP"}):OnChanged(function(value)
     if value then Lib:Notify("Loot ESP Enabled", 1) else Lib:Notify("Loot ESP Disabled", 1) end
 end)
-local armoryESP = Groupbox1:AddToggle({Default = false, Text = "Armory ESP"}):OnChanged(function(value)
+local armoryESP = Groupbox1:AddToggle({Default = true, Text = "Armory ESP"}):OnChanged(function(value)
     if value then Lib:Notify("Armory ESP Enabled", 1) else Lib:Notify("Armory ESP Disabled", 1) end
 end)
-local atmESP = Groupbox1:AddToggle({Default = false, Text = "ATM ESP"}):OnChanged(function(value)
+local atmESP = Groupbox1:AddToggle({Default = true, Text = "ATM ESP"}):OnChanged(function(value)
     if value then Lib:Notify("ATM ESP Enabled", 1) else Lib:Notify("ATM ESP Disabled", 1) end
 end)
-local safeESP = Groupbox1:AddToggle({Default = false, Text = "Breakables ESP"}):OnChanged(function(value)
-    if value then Lib:Notify("Breakables ESP Enabled", 1) else Lib:Notify("Breakables ESP Disabled", 1) end
+local safeESP = Groupbox1:AddToggle({Default = true, Text = "Brekeables ESP"}):OnChanged(function(value)
+    if value then Lib:Notify("Brekeables ESP Enabled", 1) else Lib:Notify("Brekeables ESP Disabled", 1) end
 end)
 local datamodel = dx9.GetDatamodel()
-local workspace = FindFirstChildOfClass(datamodel, 'Workspace')
-local map = FindFirstChild(workspace, 'Map')
-local filter = FindFirstChild(workspace, 'Filter')
-for i, v in pairs(dx9) do
-    _G[i] = v
-end
+local workspace = dx9.FindFirstChildOfClass(datamodel, 'Workspace')
+local map = dx9.FindFirstChild(workspace, 'Map')
+local filter = dx9.FindFirstChild(workspace, 'Filter')
 local function LootESP()
-    for _, v in next, GetChildren(FindFirstChild(filter, 'SpawnedPiles')) do
-        local name = GetName(v)
-        local meshpart = FindFirstChild(v, 'MeshPart')
-        local pos = GetPosition(meshpart)
-        local pos2 = WorldToScreen({pos.x, pos.y, pos.z})
+    for _, v in next, dx9.GetChildren(dx9.FindFirstChild(filter, 'SpawnedPiles')) do
+        local name = dx9.GetName(v)
+        local meshpart = dx9.FindFirstChild(v, 'MeshPart')
+        local pos = dx9.GetPosition(meshpart)
+        local pos2 = dx9.WorldToScreen({pos.x, pos.y, pos.z})
         local displayText = "Scrap"
         if name == "C1" then
             displayText = "Crate"
@@ -36,44 +34,44 @@ local function LootESP()
             displayText = "Gift"
         end
         if lootESP.Value then
-            DrawString({pos2.x - 15, pos2.y + 10}, {235, 237, 143}, displayText)
-            DrawCircle({pos2.x, pos2.y}, {235, 237, 143}, 4)
+            dx9.DrawString({pos2.x - 15, pos2.y + 10}, {235, 237, 143}, displayText)
+            dx9.DrawCircle({pos2.x, pos2.y}, {235, 237, 143}, 4)
         end
     end
 end
 local function ArmoryESP()
-    for _, v in next, GetChildren(FindFirstChild(map, 'Shopz')) do
-        local name = GetName(v)
-        local mainpart = FindFirstChild(v, 'MainPart')
-        local pos = GetPosition(mainpart)
-        local pos2 = WorldToScreen({pos.x, pos.y, pos.z})
+    for _, v in next, dx9.GetChildren(dx9.FindFirstChild(map, 'Shopz')) do
+        local name = dx9.GetName(v)
+        local mainpart = dx9.FindFirstChild(v, 'MainPart')
+        local pos = dx9.GetPosition(mainpart)
+        local pos2 = dx9.WorldToScreen({pos.x, pos.y, pos.z})
         if armoryESP.Value then
             if name == 'ArmoryDealer' then 
                 name = 'Armory'
             end
-            DrawString({pos2.x - 15, pos2.y + 10}, {255, 255, 255}, name)
-            DrawCircle({pos2.x, pos2.y}, {255, 255, 255}, 4)
+            dx9.DrawString({pos2.x - 15, pos2.y + 10}, {255, 255, 255}, name)
+            dx9.DrawCircle({pos2.x, pos2.y}, {255, 255, 255}, 4)
         end
     end
 end
 local function ATMESP()
-    for _, v in next, GetChildren(FindFirstChild(map, 'ATMz')) do
-        local mainpart = FindFirstChild(v, 'MainPart')
-        local pos = GetPosition(mainpart)
-        local pos2 = WorldToScreen({pos.x, pos.y, pos.z})
+    for _, v in next, dx9.GetChildren(dx9.FindFirstChild(map, 'ATMz')) do
+        local mainpart = dx9.FindFirstChild(v, 'MainPart')
+        local pos = dx9.GetPosition(mainpart)
+        local pos2 = dx9.WorldToScreen({pos.x, pos.y, pos.z})
         if atmESP.Value then
-            DrawString({pos2.x - 10, pos2.y + 10}, {93, 163, 233}, 'ATM')
-            DrawCircle({pos2.x, pos2.y}, {93, 163, 233}, 4)
+            dx9.DrawString({pos2.x - 10, pos2.y + 10}, {93, 163, 233}, 'ATM')
+            dx9.DrawCircle({pos2.x, pos2.y}, {93, 163, 233}, 4)
         end
     end
 end
 local function SafeESP()
-    for _, safe in next, GetChildren(FindFirstChild(map, "BredMakurz")) do
-        local mainpart = FindFirstChild(safe, "MainPart")
+    for _, safe in next, dx9.GetChildren(dx9.FindFirstChild(map, "BredMakurz")) do
+        local mainpart = dx9.FindFirstChild(safe, "MainPart")
         if mainpart then
-            local pos = GetPosition(mainpart)
-            local pos2 = WorldToScreen({pos.x, pos.y, pos.z})
-            local safeName = GetName(safe)
+            local pos = dx9.GetPosition(mainpart)
+            local pos2 = dx9.WorldToScreen({pos.x, pos.y, pos.z})
+            local safeName = dx9.GetName(safe)
             local displ = ""
             if string.find(safeName, "Register") then
                 displ = "Register"
@@ -84,12 +82,12 @@ local function SafeESP()
             else
                 displ = "Unknown"
             end
-            local valuesFolder = FindFirstChild(safe, "Values")
+            local valuesFolder = dx9.FindFirstChild(safe, "Values")
             local brokenValue = false
             if valuesFolder then
-                local broken = FindFirstChild(valuesFolder, "Broken")
+                local broken = dx9.FindFirstChild(valuesFolder, "Broken")
                 if broken then
-                    brokenValue = GetBoolValue(broken)
+                    brokenValue = dx9.GetBoolValue(broken)
                 end
             end
 
@@ -98,8 +96,8 @@ local function SafeESP()
                 color = {191, 3, 3}
             end
             if safeESP.Value then
-                DrawString({pos2.x - 35, pos2.y + 10}, color, "[" .. displ .. "]")
-                DrawCircle({pos2.x, pos2.y}, color, 4)
+                dx9.DrawString({pos2.x - 35, pos2.y + 10}, color, "[" .. displ .. "]")
+                dx9.DrawCircle({pos2.x, pos2.y}, color, 4)
             end
         end
     end
@@ -109,5 +107,5 @@ while true do
     ArmoryESP()
     ATMESP()
     SafeESP()
-    Wait(0.1)
+    dx9.Wait(0.1)
 end
